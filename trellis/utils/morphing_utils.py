@@ -7,6 +7,9 @@ import os
 from glob import glob
 import imageio
 from ..utils import render_utils
+# =================================== Custom ===========================================
+import trimesh
+# =================================== Custom ===========================================
 
 def unique_rows_with_mask(x: torch.Tensor):
     seen = set()
@@ -244,6 +247,24 @@ def run_morphing(pipeline, src_img, tar_img, morphing_params, seed, save_path, n
                     seed=seed
                 )
 
+            # =================================== Custom ===========================================
+            mesh_dir = os.path.join(save_path, "meshes")
+            os.makedirs(mesh_dir, exist_ok=True)
+
+            # 1. Access the MeshExtractResult
+            mesh_data = outputs['mesh'][0]
+
+            # 2. Convert PyTorch Tensors to NumPy arrays for Trimesh
+            # MeshExtractResult usually has .vertices and .faces attributes
+            vertices = mesh_data.vertices.cpu().numpy()
+            faces = mesh_data.faces.cpu().numpy()
+
+            # 3. Create the Trimesh object
+            t_mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+
+            # 4. Export safely
+            t_mesh.export(f"{mesh_dir}/frame_{morphing_idx:04d}.obj")
+            # =================================== Custom ===========================================
             gs_video_list.append(np.stack(render_utils.render_rot_video(outputs['gaussian'][0], bg_color=bg_color)['color'], axis=0))
             mesh_video_list.append(np.stack(render_utils.render_rot_video(outputs['mesh'][0], bg_color=bg_color)['normal'], axis=0))
 

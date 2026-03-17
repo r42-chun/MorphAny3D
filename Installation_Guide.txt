@@ -1,0 +1,100 @@
+1) $env:CUDA_HOME = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4"
+2) $env:PATH = "${env:CUDA_HOME}\bin;${env:PATH}"
+3) $env:HF_ENDPOINT="https://hf-mirror.com/"
+4) $env:INCLUDE = "${env:CUDA_HOME}\include;${env:INCLUDE}"
+5) $env:LIB = "${env:CUDA_HOME}\lib\x64;${env:LIB}"
+6) python.exe -m pip install --upgrade pip
+7) pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+8) pip install xformers==0.0.28.post3 --index-url=https://download.pytorch.org/whl/cu124
+9) pip install pillow imageio imageio-ffmpeg tqdm easydict opencv-python-headless scipy ninja rembg onnxruntime trimesh xatlas pyvista pymeshfix igraph transformers psutil cython
+10) pip install git+https://github.com/EasternJournalist/utils3d.git#egg=utils3d
+11) pip install https://github.com/kingbri1/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu124torch2.5.1cxx11abiFALSE-cp311-cp311-win_amd64.whl
+12) pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.1_cu124.html
+
+13) git clone https://github.com/NVlabs/nvdiffrast.git ./tmp/extensions/nvdiffrast
+14) pip install ./tmp/extensions/nvdiffrast --no-build-isolation
+
+15) git clone --recurse-submodules https://github.com/JeffreyXiang/diffoctreerast.git ./tmp/extensions/diffoctreerast
+16) pip install ./tmp/extensions/diffoctreerast --no-build-isolation
+
+17) git clone https://github.com/autonomousvision/mip-splatting.git ./tmp/extensions/mip-splatting
+18) pip install ./tmp/extensions/mip-splatting/submodules/diff-gaussian-rasterization/ --no-build-isolation
+
+19) cd extensions\vox2seq
+20) pip install . -v --no-build-isolation
+21) cd ..\..
+
+22) pip install gradio==4.44.1 gradio_litmodel3d==0.0.1 triton-windows==3.2.0.post19 pydantic==2.10.6 open3d hf_xet spconv-cu120
+23) pip install rembg==2.0.60
+24) pip install "numpy<2.0.0" "pillow<11.0.0"
+
+25) pip install --extra-index-url https://miropsota.github.io/torch_packages_builder pytorch3d==0.7.9+pt2.5.1cu124
+26) pip install plyfile
+
+27) pip uninstall utils3d -y
+28) pip install git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8
+
+29) pip install trimesh pyrender
+
+================================================================
+To run fully in offline mode without downloading models
+$env:HF_HUB_OFFLINE = "1"
+python example_3Dmorphing.py
+================================================================
+--no-build-isolation
+
+1) git clone https://github.com/r42-chun/MorphAny3D.git
+2) Use Python 3.10 as the compiler
+3) pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+4) pip install "numpy<2"
+
+# Installing PyTorch3D.
+6) $env:CUDA_HOME="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4"
+   $env:PATH="$env:CUDA_HOME\bin;$env:PATH"
+7) pip install --extra-index-url https://miropsota.github.io/torch_packages_builder pytorch3d
+
+# Installing other libraries
+9) pip install pillow imageio imageio-ffmpeg tqdm easydict opencv-python-headless scipy ninja rembg onnxruntime trimesh xatlas pyvista pymeshfix igraph transformers
+10) pip install git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8
+11) pip install xformers==0.0.28.post1 --index-url https://download.pytorch.org/whl/cu124
+12) pip install kaolin -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.4.0_cu121.html
+13) pip install spconv-cu120
+14) pip install git+https://github.com/NVlabs/nvdiffrast.git --no-build-isolation
+15) pip install git+https://github.com/JeffreyXiang/diffoctreerast.git
+16) pip install git+https://github.com/autonomousvision/mip-splatting.git#subdirectory=submodules/diff-gaussian-rasterization
+17) pip install ./extensions/vox2seq
+18) pip install gradio==4.44.1 gradio_litmodel3d==0.0.1
+
+Un-needed
+==============================================================================
+5) pip install fvcore iopath
+6) pip install ninja
+7) pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.7"
+
+alternative to step 7
+    git clone https://github.com/facebookresearch/pytorch3d.git
+    git checkout v0.7.7
+    pip install -e .
+
+
+
+--------------------------------------------------------------------------
+If the error says
+The detected CUDA version (13.0) mismatches the version that was used to compile
+    PyTorch (12.4). Please make sure to use the same CUDA versions.
+
+Install Cuda Toolkit 12.4 by going
+    https://developer.nvidia.com/cuda-12-4-0-download-archive
+
+And in the installation click advance
+    Click this <Cuda -> Development -> Compiler>
+    Click this <Cuda -> Runtime -> Libraries>
+    Uncheck everything else
+
+After that we want to make sure it is installed here
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4
+
+Do step 7 again.
+--------------------------------------------------------------------------
+==============================================================================
+
