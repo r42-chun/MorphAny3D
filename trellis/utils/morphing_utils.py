@@ -258,12 +258,17 @@ def run_morphing(pipeline, src_img, tar_img, morphing_params, seed, save_path, n
             # MeshExtractResult usually has .vertices and .faces attributes
             vertices = mesh_data.vertices.cpu().numpy()
             faces = mesh_data.faces.cpu().numpy()
+            colours = mesh_data.vertex_colors.cpu().numpy()
 
             # 3. Create the Trimesh object
-            t_mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+            t_mesh = trimesh.Trimesh(
+                vertices=vertices,
+                faces=faces,
+                vertex_colors=colours
+            )
 
             # 4. Export safely
-            t_mesh.export(f"{mesh_dir}/frame_{morphing_idx:04d}.obj")
+            t_mesh.export(f"{mesh_dir}/frame_{morphing_idx:04d}.glb")
             # =================================== Custom ===========================================
             gs_video_list.append(np.stack(render_utils.render_rot_video(outputs['gaussian'][0], bg_color=bg_color)['color'], axis=0))
             mesh_video_list.append(np.stack(render_utils.render_rot_video(outputs['mesh'][0], bg_color=bg_color)['normal'], axis=0))
