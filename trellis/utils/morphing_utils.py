@@ -259,15 +259,11 @@ def run_morphing(pipeline, src_img, tar_img, morphing_params, seed, save_path, n
             vertices = mesh_data.vertices.cpu().numpy()
             faces = mesh_data.faces.cpu().numpy()
 
-            print("====================================")
             vertex_attrs = mesh_data.vertex_attrs
             vertex_colours = vertex_attrs[:, :3].cpu().numpy().astype('float32')
             vertex_normals = vertex_attrs[:, 3:6].cpu().numpy()
             norms = np.linalg.norm(vertex_normals, axis=1, keepdims=True)
             vertex_normals = vertex_normals / (norms + 1e-8)
-
-            print(f"vertex_colours: {vertex_colours}")
-            print("====================================")
 
             # 3. Create the Trimesh object
             t_mesh = trimesh.Trimesh(
@@ -277,12 +273,9 @@ def run_morphing(pipeline, src_img, tar_img, morphing_params, seed, save_path, n
                 process=False
             )
 
-            t_mesh.visual.vertex_colors = vertex_colours.astype(np.float32)  # keep float (0–1)
-            print(t_mesh.visual.vertex_colors[:5])
-            print(t_mesh.visual.vertex_colors.dtype)
+            t_mesh.visual.vertex_colors = vertex_colours.astype(np.float32)
 
             # 4. Export safely
-            t_mesh.export(f"{mesh_dir}/frame_{morphing_idx:04d}.glb")
             t_mesh.export(f"{mesh_dir}/frame_{morphing_idx:04d}.ply")
             # =================================== Custom ===========================================
             gs_video_list.append(np.stack(render_utils.render_rot_video(outputs['gaussian'][0], bg_color=bg_color)['color'], axis=0))
