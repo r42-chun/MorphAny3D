@@ -35,6 +35,8 @@
 28) pip install git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8
 
 29) pip install trimesh pyrender
+30) pip install "pyglet<2"
+
 
 ================================================================
 To run fully in offline mode without downloading models

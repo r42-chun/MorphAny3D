@@ -19,16 +19,16 @@ def render_seed_image(obj_path, out_path):
     return Image.open(out_path).convert("RGB")
 
 # 2. YOUR FILES
-source_obj = "my_source_vessel.obj"
-target_obj = "my_target_creature.obj"
+source_obj = "./inputs/rbc.obj"
+target_obj = "./inputs/tcell.obj"
 
 print("--- Rendering Seed Images ---")
-src_img = render_seed_image(source_obj, "src_seed.png")
-tar_img = render_seed_image(target_obj, "tar_seed.png")
+src_img = render_seed_image(source_obj, "./assets/src_seed.png")
+tar_img = render_seed_image(target_obj, "./assets/tar_seed.png")
 
 # 3. CONFIGURE MORPH (Optimized for your RTX A5000)
 params = {
-    "morphing_num": 60,         # More frames for smoother motion
+    "morphing_num": 30,         # More frames for smoother motion
     "init_morphing_flag": False,
     "ss_mca_flag": True,        # Keep structure clean
     "slat_mca_flag": True,      # Keep details clean
@@ -42,4 +42,4 @@ params = {
 # 4. RUN
 print("--- Starting AI Morphing ---")
 # This will call the run_morphing function we discussed earlier
-run_morphing(pipeline, src_img, tar_img, params, 0, "./outputs/my_morph", "CustomMorph")
+# run_morphing(pipeline, src_img, tar_img, params, 0, "./outputs/my_morph", "CustomMorph")
